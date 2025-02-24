@@ -1,3 +1,5 @@
+photo and gif / 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,11 +33,11 @@
     fileUpload.addEventListener('change', function() {
         const files = Array.from(fileUpload.files);
         files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const item = document.createElement('div');
-                item.classList.add('gallery-item');
-                if (file.type.startsWith('image/')) {
+            const item = document.createElement('div');
+            item.classList.add('gallery-item');
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
                     item.innerHTML = `<img src="${e.target.result}" alt="Gallery Image">`;
                     item.addEventListener('click', function() {
                         slideshow.style.display = 'flex';
@@ -43,18 +45,20 @@
                         slideshowImage.style.display = 'block';
                         slideshowVideo.style.display = 'none';
                     });
-                } else if (file.type.startsWith('video/')) {
-                    item.innerHTML = `<video src="${e.target.result}" controls></video>`;
-                    item.addEventListener('click', function() {
-                        slideshow.style.display = 'flex';
-                        slideshowVideo.src = e.target.result;
-                        slideshowVideo.style.display = 'block';
-                        slideshowImage.style.display = 'none';
-                    });
-                }
+                    gallery.appendChild(item);
+                };
+                reader.readAsDataURL(file);
+            } else if (file.type.startsWith('video/')) {
+                const url = URL.createObjectURL(file);
+                item.innerHTML = `<video src="${url}" controls></video>`;
+                item.addEventListener('click', function() {
+                    slideshow.style.display = 'flex';
+                    slideshowVideo.src = url;
+                    slideshowVideo.style.display = 'block';
+                    slideshowImage.style.display = 'none';
+                });
                 gallery.appendChild(item);
             }
-            reader.readAsDataURL(file);
         });
     });
 
