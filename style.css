@@ -1,21 +1,30 @@
+:root {
+    --primary-color: #333;
+    --secondary-color: #555;
+    --background-color: #f4f4f4;
+    --container-background: white;
+    --border-radius: 8px;
+    --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--primary-color);
     margin: 0;
     padding: 20px;
 }
 .container {
     max-width: 600px;
     margin: auto;
-    background: white;
+    background: var(--container-background);
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
 }
 h1 {
     text-align: center;
-    color: #555;
+    color: var(--secondary-color);
 }
 .photo {
     text-align: center;
@@ -31,4 +40,8 @@ h1 {
 .video {
     text-align: center;
     margin: 20px 0;
+}
+.video video {
+    width: 100%;
+    border-radius: var(--border-radius);
 }
