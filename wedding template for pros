@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Gallery</title>
+    <style>
+        body {
+            font-family: arial, sans-serif;
+            margin: 30;
+            padding: 30;
+            background-color: #f8f0e3;
+        }
+        .container {
+            width: 100%;
+            margin: 30;
+            overflow: hidden;
+        }
+        #upload {
+            margin: 100px 0;
+        }
+        #gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .gallery-item {
+            width: 90%;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+        }
+        .slideshow {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .slideshow img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>jake's baby pictures</h2>
+    <input type="file" id="fileUpload" multiple accept="image/*,video/*">
+    <div id="gallery"></div>
+</div>
+
+<div class="slideshow" id="slideshow">
+    <span class="close" id="close">&times;</span>
+    <img id="slideshowImage" src="" alt="Slideshow Image">
+</div>
+
+<script>
+    const fileUpload = document.getElementById('fileUpload');
+    const gallery = document.getElementById('gallery');
+    const slideshow = document.getElementById('slideshow');
+    const slideshowImage = document.getElementById('slideshowImage');
+    const close = document.getElementById('close');
+
+    fileUpload.addEventListener('change', function() {
+        const files = Array.from(fileUpload.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const item = document.createElement('div');
+                item.classList.add('gallery-item');
+                item.innerHTML = `<img src="${e.target.result}" alt="Gallery Image">`;
+                item.addEventListener('click', function() {
+                    slideshow.style.display = 'flex';
+                    slideshowImage.src = e.target.result;
+                });
+                gallery.appendChild(item);
+            }
+            reader.readAsDataURL(file);
+        });
+    });
+
+    close.addEventListener('click', function() {
+        slideshow.style.display = 'none';
+    });
+</script>
+
+</body>
+</html>
