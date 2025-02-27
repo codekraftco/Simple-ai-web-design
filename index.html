@@ -1,4 +1,3 @@
-# Obituary Page
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,23 +10,38 @@
 
 <div class="container">
     <h1>In Loving Memory</h1>
-    <div class="photo">
-        <img src="path/to/photo.jpg" alt="Photo of the Deceased">
-    </div>
-    <div class="info">
-        <p>Name: ____________________</p>
-        <p>Date of Birth: ______________</p>
-        <p>Date of Passing: ____________</p>
-        <p>Biography: ____________________________________________</p>
-    </div>
-    <div class="video">
-        <video width="100%" controls>
-            <source src="path/to/video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
+    <form id="obituaryForm">
+        <div class="photo">
+            <input type="file" name="photo" accept="image/*" required>
+        </div>
+        <div class="info">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="date" name="dob" placeholder="Date of Birth" required>
+            <input type="date" name="dop" placeholder="Date of Passing" required>
+            <textarea name="bio" placeholder="Biography" required></textarea>
+        </div>
+        <div class="video">
+            <input type="file" name="video" accept="video/*" required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
 </div>
+
+<script>
+  document.getElementById('obituaryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const response = await fetch('/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const result = await response.json();
+    alert(result.message);
+  });
+</script>
 
 </body>
 </html>
-Obituaty page with photo with blank infor
